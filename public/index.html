@@ -28,8 +28,8 @@
 </head>
 <body>
   <h1>Dynamic HTML Host</h1>
-  <p>Enter a URL to an HTML file:</p>
-  <input type="text" id="urlInput" placeholder="https://example.com/file.html">
+  <p>Enter a download link to an HTML file:</p>
+  <input type="text" id="urlInput" placeholder="https://example.com/path/to/file.html">
   <button onclick="fetchHtml()">Load HTML</button>
   <div id="htmlContainer"></div>
 
@@ -37,7 +37,7 @@
     async function fetchHtml() {
       const url = document.getElementById('urlInput').value;
       if (!url) {
-        alert('Please enter a valid URL.');
+        alert('Please enter a valid download link.');
         return;
       }
 
@@ -50,7 +50,7 @@
         document.getElementById('htmlContainer').innerHTML = html;
       } catch (error) {
         console.error(error);
-        alert('Error fetching HTML. Please check the URL and try again.');
+        alert('Error fetching HTML. Please check the link and try again.');
       }
     }
   </script>
