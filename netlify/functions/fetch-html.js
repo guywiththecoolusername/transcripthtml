@@ -11,10 +11,19 @@ exports.handler = async (event) => {
   }
 
   try {
+    // Fetch the file from the provided URL
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`Failed to fetch HTML: ${response.statusText}`);
+      throw new Error(`Failed to download file: ${response.statusText}`);
     }
+
+    // Check if the file is an HTML file
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('text/html')) {
+      throw new Error('The provided link does not point to an HTML file.');
+    }
+
+    // Get the HTML content
     const html = await response.text();
 
     return {
