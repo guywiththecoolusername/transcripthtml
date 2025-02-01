@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic HTML Host</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input {
+      width: 300px;
+      padding: 10px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    #htmlContainer {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dynamic HTML Host</h1>
+  <p>Enter a URL to an HTML file:</p>
+  <input type="text" id="urlInput" placeholder="https://example.com/file.html">
+  <button onclick="fetchHtml()">Load HTML</button>
+  <div id="htmlContainer"></div>
+
+  <script>
+    async function fetchHtml() {
+      const url = document.getElementById('urlInput').value;
+      if (!url) {
+        alert('Please enter a valid URL.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`/.netlify/functions/fetch-html?url=${encodeURIComponent(url)}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch HTML');
+        }
+        const html = await response.text();
+        document.getElementById('htmlContainer').innerHTML = html;
+      } catch (error) {
+        console.error(error);
+        alert('Error fetching HTML. Please check the URL and try again.');
+      }
+    }
+  </script>
+</body>
+</html>
